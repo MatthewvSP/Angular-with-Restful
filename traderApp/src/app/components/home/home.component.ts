@@ -47,18 +47,11 @@ export class HomeComponent implements OnInit
     
     console.log('Getting All Traders...');
     this.tService.getAllTraders().subscribe((traders) => {
-      this.traders = traders});
-    try{      
+      this.traders = traders
       var json = JSON.stringify(this.traders);
       json = JSON.parse(json);
       console.log(json);
-      console.log(json["Traders"][0].firstName);
-    }  
-    catch (e)
-    {
-      console.log(e);
-    }
-    
+    });
   }
 
 }
