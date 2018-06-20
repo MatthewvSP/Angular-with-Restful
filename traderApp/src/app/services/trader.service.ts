@@ -33,6 +33,23 @@ export class TraderService {
         console.log("error Occured");
       }
     );
+  }
+
+  public deleteTrader(trader:Trader)
+  {
+    var traderName = trader.firstName;
+    console.log("Trying to delete: " + traderName);
+    
+    
+    return this.http.delete('//localhost:8000/api/traders/' + traderName).subscribe(
+      res => {
+        console.log("Responded Correctly...")
+        console.log(res);
+      },
+      err => {
+        console.log("error Occured");
+      }
+    );
     
   }
    

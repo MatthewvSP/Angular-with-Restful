@@ -1,14 +1,6 @@
-<h1>This is the Home HTML</h1>
-
-<h3>Insert Trader</h3>
-<form>
-    <div>
-        <label for="firstName">First Name: </label><br>
-        <input type = "text" #firstNameInput>
-    </div>
-    <div>
-        <button (click) = "submitTrader(firstNameInput.value)"> Submit Trader</button>
-    </div>
-</form>
-
-<button (click) = "getAllTraders()">Get All Traders</button>
+<h1> Traders </h1>
+<div *ngFor = "let trader of traders">
+    <h4> {{trader.firstName}}</h4>
+    <h6> Email: (NOT IMPLEMENTED)</h6>
+    <h6> TraderID: (NOT IMPLEMENTED)</h6>
+</div>

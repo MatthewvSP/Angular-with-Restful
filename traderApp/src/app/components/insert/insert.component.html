@@ -1,0 +1,10 @@
+<h3>Insert Trader</h3>
+<form>
+    <div>
+        <label for="firstName">First Name: </label><br>
+        <input type = "text" #firstNameInput>
+    </div>
+    <div>
+        <button (click) = "submitTrader(firstNameInput.value)"> Submit Trader</button>
+    </div>
+</form>

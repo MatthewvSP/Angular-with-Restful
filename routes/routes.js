@@ -19,10 +19,15 @@ var appRouter = function (app) {
 
         con.query("SELECT * FROM traders", function(err, result) {
             if (err) throw(err);
+            console.log(result);
             var length = result.length;
-            var jsonResponse = "{ \"Traders\": [";
+            
             for(var i = 0; i < length; i++)
             {   
+                if (i == 0)
+                {
+                    var jsonResponse = "[";
+                }
                 jsonResponse += "{ \"firstName\" : \"" + result[i]['firstName'] + "\"}"
                 console.log(result[i]['firstName']);
                 if (i < length -1)
@@ -31,17 +36,22 @@ var appRouter = function (app) {
                 }
                 else
                 {
-                    jsonResponse += "]}"
+                    jsonResponse += "]"
                 }
             }
-            console.log(jsonResponse);
-            jsonResponse = JSON.parse(jsonResponse);
-            res.status(200).send(jsonResponse);
+            
+            if (length != 0)
+            {
+
+            
+                jsonResponse = JSON.parse(jsonResponse);
+                res.status(200).send(jsonResponse);
+            }
         })
     });
 
     app.post("/api/traders", function(req, res) {
-        console.log(req['body']);
+        //console.log(req['body']);
         console.log("Adding a new Trader");
         con.query("use TraderApp", function(err, result){
             if (err)
@@ -58,10 +68,45 @@ var appRouter = function (app) {
                 throw (err);
             }
         });
+        
         console.log("Trader Added to Database!");
         res.status(201).send();
     })
 
+    app.get('/api/traders/:firstName', function(req, res) {
+        con.query("use TraderApp;", function(err, res) {
+            if (err) throw(err);
+            console.log("Using TraderApp database!");
+        });
+        var name = req['params']['firstName'];
+        console.log(name);
+        var query = "SELECT * FROM traders WHERE firstName = \"" + name + "\";";
+        con.query(query, function(err, result) {
+            if (err) throw(err);
+
+            var jsonResponse = "[{\"firstName\" : \"" + result[0]['firstName'] + "\"}]"
+            console.log(jsonResponse);
+            jsonResponse = JSON.parse(jsonResponse);
+            res.status(200).send(jsonResponse);
+            
+        });
+    })
+
+    app.delete("/api/traders/:firstName", function(req, res) {
+        console.log("Attempting To Delete A Trader");
+        con.query("use TraderApp;", function(err, res) {
+            if (err) throw(err);
+            console.log("Using TraderApp database!");
+        });
+        var name = req['params']['firstName'];
+        console.log(name);
+        var query = "DELETE FROM traders WHERE firstName = \"" + name + "\";"
+        con.query(query, function(err, result) {
+            if (err) throw (err);
+
+            res.status(200).send();
+        });
+    })
 }
   
 module.exports = appRouter;

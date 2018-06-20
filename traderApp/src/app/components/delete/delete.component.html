@@ -1,0 +1,7 @@
+<h3>Delete Trader</h3>
+
+<ul>
+  <li *ngFor = "let trader of traders"> {{trader.firstName}}
+    <button (click) = "deleteTrader(trader)">X</button>
+  </li>
+</ul>

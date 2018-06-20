@@ -20,26 +20,11 @@ export class HomeComponent implements OnInit
    }
 
   ngOnInit() {
-    console.log('Home Component initialized...')
-
-    
-  }
-
-  submitTrader(firstNameInput)
-  {
-    if (firstNameInput != "")
-    {
-      console.log(firstNameInput);
-
-
-      this.tService.insertTrader(firstNameInput);
-
-    }
-    else
-    {
-      console.log('First Name Input is empty...')
-    }
-    
+    console.log('Home Component initialized...');
+    this.tService.getAllTraders().subscribe((traders) => {
+      this.traders = traders;
+      console.log(this.traders)
+    });
   }
   
   getAllTraders()
@@ -47,11 +32,11 @@ export class HomeComponent implements OnInit
     
     console.log('Getting All Traders...');
     this.tService.getAllTraders().subscribe((traders) => {
-      this.traders = traders
-      var json = JSON.stringify(this.traders);
-      json = JSON.parse(json);
-      console.log(json);
+      this.traders = traders;
+
+      console.log(this.traders)
     });
+
   }
 
 }
